@@ -38,10 +38,11 @@ public class UserServiceImp implements UserDetailsService {
     @Transactional
     public void updateUser(String username, User updateUser) {
         User user = findByUsername(username);
+        user.setFirstName(updateUser.getFirstName());
+        user.setLastName(updateUser.getLastName());
         user.setUsername(updateUser.getUsername());
         user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         user.setAge(updateUser.getAge());
-        user.setEmail(updateUser.getEmail());
         user.setRoles(updateUser.getRoles());
         userRepository.save(user);
     }
@@ -56,14 +57,9 @@ public class UserServiceImp implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    @Transactional(readOnly = true)
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByEmail(username);
+        User user = userRepository.findByUsername(username);
         return user;
     }
 }

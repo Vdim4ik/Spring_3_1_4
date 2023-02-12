@@ -26,12 +26,14 @@ public class AdminController {
     public String getAdminPage(ModelMap modelMap, Principal principal) {
         modelMap.addAttribute("user", userServiceImp.findByUsername(principal.getName()));
         modelMap.addAttribute("userList", userServiceImp.getUserList());
+        modelMap.addAttribute("roleList", roleServiceImp.getRoleList());
         return "admin";
     }
 
     @GetMapping("/new")
-    public String getPageToAddNewUser(ModelMap modelMap) {
-        modelMap.addAttribute("user", new User());
+    public String getPageToAddNewUser(ModelMap modelMap, Principal principal) {
+        modelMap.addAttribute("user", userServiceImp.findByUsername(principal.getName()));
+        modelMap.addAttribute("newUser", new User());
         modelMap.addAttribute("roleList", roleServiceImp.getRoleList());
         return "new";
     }
@@ -42,20 +44,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/update/{username}")
-    public String getPageToUpdate(ModelMap modelMap, @PathVariable("username") String username) {
-        modelMap.addAttribute("user", userServiceImp.findByUsername(username));
-        modelMap.addAttribute("roleList", roleServiceImp.getRoleList());
-        return "update";
-    }
-
     @PatchMapping("/update/{username}")
     public String updateUser(@ModelAttribute User user, @PathVariable("username") String username) {
         userServiceImp.updateUser(username, user);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/update/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userServiceImp.deleteUser(id);
         return "redirect:/admin";

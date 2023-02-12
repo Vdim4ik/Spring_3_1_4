@@ -19,6 +19,9 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "first_name")
+    private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
 
@@ -27,9 +30,6 @@ public class User implements UserDetails {
 
     @Column(name = "age")
     private byte age;
-
-    @Column(name = "email")
-    private String email;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -40,12 +40,12 @@ public class User implements UserDetails {
 
     public User() { }
 
-    public User(String username, String lastName, String password, byte age, String email, Set<Role> roles) {
+    public User(String username,String firstName, String lastName, String password, byte age, Set<Role> roles) {
         this.username = username;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.age = age;
-        this.email = email;
         this.roles = roles;
     }
 
@@ -82,12 +82,12 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public String getEmail() {
-        return email;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     @Override
@@ -105,6 +105,10 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public boolean hasRole(String nameRole) {
+        return roles.stream().map(Role::getName).anyMatch(x -> x.equals(nameRole));
     }
 
     @Override
@@ -138,9 +142,7 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", login='" + username + '\'' +
                 ", passowrd='" + password + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
+                ", age=" + age +                ", roles=" + roles +
                 '}';
     }
 

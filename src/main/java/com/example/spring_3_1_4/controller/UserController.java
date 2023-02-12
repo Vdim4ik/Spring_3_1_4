@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.example.spring_3_1_4.model.User;
 import com.example.spring_3_1_4.service.UserServiceImp;
 
 import java.security.Principal;
@@ -21,8 +20,7 @@ public class UserController {
 
     @GetMapping("/user")
     public String getUserPage(Principal principal, ModelMap modelMap) {
-        User user = userServiceImp.findByUsername(principal.getName());
-        modelMap.addAttribute("user", user);
+        modelMap.addAttribute("user", userServiceImp.findByUsername(principal.getName()));
         return "user";
     }
 }
