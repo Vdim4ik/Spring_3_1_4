@@ -12,13 +12,10 @@ public interface UserService extends UserDetailsService {
 
     void addUser(User user);
 
-    void updateUser(String username, User updateUser);
+    void updateUser(String email, User updateUser);
 
     void deleteUser(long id);
 
-    User findByUsername(String username);
-
-    @Override
-    UserDetails loadUserByUsername(String username);
+    User findByEmail(String email);
 
 }

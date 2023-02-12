@@ -35,10 +35,17 @@ public class Init {
         adminRoles.add(userRole);
         adminRoles.add(adminRole);
         User admin = new User("admin@mail.ru", "admin", "admin", "admin", (byte) 22, adminRoles);
+
+        Set<Role> anotherAdminRole = new HashSet<>();
+        anotherAdminRole.add(adminRole);
+        User anotherAdmin = new User("vadim@mail.ru", "vadim", "vadim", "vadim", (byte) 22, anotherAdminRole);
+
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
         User user = new User("user@mail.ru", "user", "user", "user", (byte) 22, userRoles);
+
         userService.addUser(admin);
+        userService.addUser(anotherAdmin);
         userService.addUser(user);
     }
 

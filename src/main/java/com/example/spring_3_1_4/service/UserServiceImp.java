@@ -38,11 +38,11 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(String username, User updateUser) {
-        User user = findByUsername(username);
+    public void updateUser(String email, User updateUser) {
+        User user = findByEmail(email);
         user.setFirstName(updateUser.getFirstName());
         user.setLastName(updateUser.getLastName());
-        user.setUsername(updateUser.getUsername());
+        user.setEmail(updateUser.getEmail());
         user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         user.setAge(updateUser.getAge());
         user.setRoles(updateUser.getRoles());
@@ -57,13 +57,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return user;
+    public UserDetails loadUserByUsername(String email) {
+        return userRepository.findByEmail(email);
     }
 }

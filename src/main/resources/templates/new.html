@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
         <div class="container-fluid me-auto">
                 <span class="navbar-brand">
-                    <strong th:text="${user.getUsername()}"></strong>
+                    <strong th:text="${user.getEmail()}"></strong>
                         with roles:
                     <span th:each="role : ${user.getRoles()}">
                         <a th:text="${role.toString()}"></a>
@@ -41,8 +41,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user"
-                           sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"
-                           th:if="${user.hasRole('ROLE_USER')}">User</a>
+                           sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">User</a>
                     </li>
                 </ul>
             </div>
@@ -90,7 +89,7 @@
                                                 <br>
 
                                                 <label for="email"><b>Email</b></label>
-                                                <input class="form-control" th:type="email" th:name="username" id="email" required/>
+                                                <input class="form-control" th:type="email" th:name="email" id="email" required/>
                                                 <br>
 
                                                 <label for="password"><b>Password</b></label>

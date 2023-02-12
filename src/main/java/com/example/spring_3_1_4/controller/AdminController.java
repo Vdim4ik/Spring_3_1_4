@@ -24,7 +24,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String getAdminPage(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("user", userService.findByUsername(principal.getName()));
+        modelMap.addAttribute("user", userService.findByEmail(principal.getName()));
         modelMap.addAttribute("userList", userService.getUserList());
         modelMap.addAttribute("roleList", roleService.getRoleList());
         return "admin";
@@ -32,7 +32,7 @@ public class AdminController {
 
     @GetMapping("/new")
     public String getPageToAddNewUser(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("user", userService.findByUsername(principal.getName()));
+        modelMap.addAttribute("user", userService.findByEmail(principal.getName()));
         modelMap.addAttribute("newUser", new User());
         modelMap.addAttribute("roleList", roleService.getRoleList());
         return "new";
@@ -44,9 +44,9 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PatchMapping("/update/{username}")
-    public String updateUser(@ModelAttribute User user, @PathVariable("username") String username) {
-        userService.updateUser(username, user);
+    @PatchMapping("/update/{email}")
+    public String updateUser(@ModelAttribute User user, @PathVariable("email") String email) {
+        userService.updateUser(email, user);
         return "redirect:/admin";
     }
 
